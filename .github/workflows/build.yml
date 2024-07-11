@@ -51,9 +51,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Linux Dependencies
+      - name: Install Tauri dependencies
         if: matrix.platform == 'ubuntu-latest'
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.0-37 libgtk-3-0 librust-gdk-sys-dev
+        run: >-
+          sudo apt-get update &&
+          sudo apt-get install -y
+          libgtk-3-dev
+          libayatana-appindicator3-dev
+          libwebkit2gtk-4.0-dev
+          webkit2gtk-driver
+          xvfb
 
       - name: Build
         run: pnpm tauri build
