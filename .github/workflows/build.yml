@@ -61,7 +61,7 @@ jobs:
           libwebkit2gtk-4.0-dev
           webkit2gtk-driver
           xvfb
-          libjavascriptcoregtk-6.0-dev
+          libjavascriptcoregtk-4.1-dev
 
       - name: Build
         run: pnpm tauri build
