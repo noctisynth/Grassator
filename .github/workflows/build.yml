@@ -51,7 +51,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Tauri dependencies
+      - name: Install Tauri Linux Dependencies
         if: matrix.platform == 'ubuntu-latest'
         run: >-
           sudo apt-get update &&
@@ -61,6 +61,7 @@ jobs:
           libwebkit2gtk-4.0-dev
           webkit2gtk-driver
           xvfb
+          libjavascriptcoregtk-6.0-dev
 
       - name: Build
         run: pnpm tauri build
