@@ -62,6 +62,7 @@ jobs:
           webkit2gtk-driver
           xvfb
           libjavascriptcoregtk-4.1-dev
+          libsoup-3.0-dev
 
       - name: Build
         run: pnpm tauri build
