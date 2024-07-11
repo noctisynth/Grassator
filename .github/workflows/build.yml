@@ -50,4 +50,4 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm tauri build --all-targets --all-features
+      - run: pnpm tauri build
