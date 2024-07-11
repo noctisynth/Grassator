@@ -1,4 +1,4 @@
-name: Build RsHotkey
+name: Build Grassator
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  PKG_CONFIG_PATH: /usr/lib/x86_64-linux-gnu/pkgconfig
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -50,4 +51,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm tauri build
+      - name: Install Linux Dependencies
+        if: matrix.platform == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.0-37 libgtk-3-0
+
+      - name: Build
+        run: pnpm tauri build
