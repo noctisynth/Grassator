@@ -1,5 +1,19 @@
 import { createApp } from "vue";
-import "./styles.css";
 import App from "./App.vue";
 
-createApp(App).mount("#app");
+import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
+
+const app = createApp(App)
+app.use(PrimeVue, {
+    theme: {
+        preset: Aura,
+        options: {
+            prefix: 'p',
+            darkModeSelector: '.dark',
+            cssLayer: false
+        }
+    }
+});
+
+app.mount("#app");

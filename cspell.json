@@ -2,24 +2,26 @@
     "version": "0.2",
     "language": "en",
     "words": [
+        "attributify",
         "Avenir",
         "cdylib",
         "grassator",
         "icns",
         "noctisynth",
+        "primevue",
         "serde",
         "staticlib",
-        "tauri"
+        "tauri",
+        "unocss",
+        "unplugin"
     ],
     "ignorePaths": [
         // Tauri files
         "**/Cargo.lock",
         "**/target/**",
         "./src-tauri/gen/**",
-
         // Github actions
         ".github/**",
-
         // Node files
         "src/assets/**",
         "public/**",
