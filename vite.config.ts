@@ -5,6 +5,7 @@ import Components from "unplugin-vue-components/vite";
 import { PrimeVueResolver } from "@primevue/auto-import-resolver";
 import TurboConsole from "unplugin-turbo-console/vite";
 import AutoImport from 'unplugin-auto-import/vite'
+import UnoCSS from "unocss/vite";
 
 // @ts-expect-error process is a nodejs global
 const mobile = !!/android|ios/.exec(process.env.TAURI_ENV_PLATFORM);
@@ -13,6 +14,7 @@ const mobile = !!/android|ios/.exec(process.env.TAURI_ENV_PLATFORM);
 export default defineConfig(async () => ({
   plugins: [
     vue(),
+    UnoCSS(),
     AutoImport(),
     Components({
       resolvers: [PrimeVueResolver()],

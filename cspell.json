@@ -2,6 +2,7 @@
     "version": "0.2",
     "language": "en",
     "words": [
+        "attributify",
         "Avenir",
         "cdylib",
         "grassator",
@@ -10,6 +11,7 @@
         "serde",
         "staticlib",
         "tauri",
+        "unocss",
         "unplugin"
     ],
     "ignorePaths": [
