@@ -9,3 +9,7 @@ updates:
     directory: "/src-tauri" # Location of package manifests
     schedule:
       interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
