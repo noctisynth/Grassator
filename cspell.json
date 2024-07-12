@@ -1,0 +1,29 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "words": [
+        "Avenir",
+        "cdylib",
+        "grassator",
+        "icns",
+        "noctisynth",
+        "serde",
+        "staticlib",
+        "tauri"
+    ],
+    "ignorePaths": [
+        // Tauri files
+        "**/Cargo.lock",
+        "**/target/**",
+        "./src-tauri/gen/**",
+
+        // Github actions
+        ".github/**",
+
+        // Node files
+        "src/assets/**",
+        "public/**",
+        "dist/**",
+        "pnpm-lock.yaml"
+    ]
+}
