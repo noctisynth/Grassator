@@ -8,10 +8,13 @@
         "grassator",
         "icns",
         "noctisynth",
+        "pinia",
         "primevue",
+        "reqwest",
         "serde",
         "staticlib",
         "tauri",
+        "toastservice",
         "unocss",
         "unplugin"
     ],
