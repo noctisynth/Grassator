@@ -13,9 +13,12 @@
     "@primevue/themes": "^4.0.0",
     "@tauri-apps/api": "2.0.0-beta.14",
     "@tauri-apps/plugin-shell": "2.0.0-beta.7",
+    "pinia": "^2.1.7",
+    "primeicons": "^7.0.0",
     "primevue": "^4.0.0",
     "unocss": "^0.61.3",
-    "vue": "^3.4.31"
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@primevue/auto-import-resolver": "^4.0.0",
