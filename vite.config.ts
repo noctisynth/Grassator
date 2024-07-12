@@ -4,7 +4,6 @@ import { internalIpV4 } from "internal-ip";
 import Components from "unplugin-vue-components/vite";
 import { PrimeVueResolver } from "@primevue/auto-import-resolver";
 import TurboConsole from "unplugin-turbo-console/vite";
-import AutoImport from 'unplugin-auto-import/vite'
 import UnoCSS from "unocss/vite";
 
 // @ts-expect-error process is a nodejs global
@@ -15,7 +14,6 @@ export default defineConfig(async () => ({
   plugins: [
     vue(),
     UnoCSS(),
-    AutoImport(),
     Components({
       resolvers: [PrimeVueResolver()],
     }),

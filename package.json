@@ -23,7 +23,6 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "internal-ip": "^7.0.0",
     "typescript": "^5.5.3",
-    "unplugin-auto-import": "^0.18.0",
     "unplugin-turbo-console": "^1.9.3",
     "unplugin-vue-components": "^0.27.2",
     "vite": "^5.3.3",
