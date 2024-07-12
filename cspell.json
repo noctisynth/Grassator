@@ -9,17 +9,16 @@
         "noctisynth",
         "serde",
         "staticlib",
-        "tauri"
+        "tauri",
+        "unplugin"
     ],
     "ignorePaths": [
         // Tauri files
         "**/Cargo.lock",
         "**/target/**",
         "./src-tauri/gen/**",
-
         // Github actions
         ".github/**",
-
         // Node files
         "src/assets/**",
         "public/**",
