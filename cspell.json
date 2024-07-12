@@ -9,6 +9,7 @@
         "icns",
         "noctisynth",
         "primevue",
+        "reqwest",
         "serde",
         "staticlib",
         "tauri",
