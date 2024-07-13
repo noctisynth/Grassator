@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "prepare": "husky",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
@@ -13,19 +14,33 @@
     "@primevue/themes": "^4.0.0",
     "@tauri-apps/api": "2.0.0-beta.14",
     "@tauri-apps/plugin-shell": "2.0.0-beta.7",
+    "pinia": "^2.1.7",
+    "primeicons": "^7.0.0",
     "primevue": "^4.0.0",
     "unocss": "^0.61.3",
-    "vue": "^3.4.31"
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@primevue/auto-import-resolver": "^4.0.0",
     "@tauri-apps/cli": "2.0.0-beta.21",
     "@vitejs/plugin-vue": "^5.0.5",
+    "husky": "^9.0.11",
     "internal-ip": "^8.0.0",
+    "lint-staged": "^15.2.7",
+    "prettier": "3.3.2",
     "typescript": "^5.5.3",
     "unplugin-turbo-console": "^1.9.3",
     "unplugin-vue-components": "^0.27.2",
     "vite": "^5.3.3",
     "vue-tsc": "^2.0.26"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,vue}": [
+      "prettier --write --ignore-unknown"
+    ],
+    "src-tauri/**/*.rs": [
+      "cargo fmt --all"
+    ]
   }
 }

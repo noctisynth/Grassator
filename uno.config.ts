@@ -5,15 +5,29 @@ import {
   presetTypography,
   presetUno,
   presetWebFonts,
-} from "unocss";
+} from 'unocss';
 
 export default defineConfig({
   rules: [
     [
-      /^bg-p-(.*)$/,
+      /^bg-p-(.*)(\/\d+)?$/,
+      ([r, c]) => {
+        return {
+          '--bg-opacity': 1,
+          'background-color': `var(--p-${c})`,
+        };
+      },
+    ],
+    [
+      /^b-p-(.*)$/,
       ([, c]) => ({
-        "--bg-opacity": 1,
-        "background-color": `var(--p-${c})`,
+        'border-color': `var(--p-${c})`,
+      }),
+    ],
+    [
+      /^text-p-(.*)$/,
+      ([, c]) => ({
+        color: `var(--p-${c})`,
       }),
     ],
   ],
