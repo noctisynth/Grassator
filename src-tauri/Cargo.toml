@@ -1,8 +1,8 @@
 [package]
 name = "grassator"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "Secure, fast multi-process downloader"
+authors = ["苏向夜 <fu050409@163.com>"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -20,4 +20,3 @@ tauri-plugin-shell = "2.0.0-beta"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 reqwest = "0.12.5"
-
