@@ -8,9 +8,10 @@
     "beforeBuildCommand": "pnpm build",
     "frontendDist": "../dist"
   },
-  "app": {"windows": [
+  "app": {
+    "windows": [
       {
-        "title": "grassator",
+        "title": "Grassator",
         "width": 800,
         "height": 600
       }

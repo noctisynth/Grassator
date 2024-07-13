@@ -36,7 +36,11 @@
     "vue-tsc": "^2.0.26"
   },
   "lint-staged": {
-    "src/**/*.{ts,vue}": "prettier --write --ignore-unknown",
-    "src-tauri/**/*.{rs}": "cargo fmt --all"
+    "src/**/*.{ts,vue}": [
+      "prettier --write --ignore-unknown"
+    ],
+    "src-tauri/**/*.rs": [
+      "cargo fmt --all"
+    ]
   }
 }
