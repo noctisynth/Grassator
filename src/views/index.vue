@@ -43,6 +43,10 @@ onMounted(async () => {
     url: 'https://freetestdata.com/wp-content/uploads/2021/09/1-MB-DOC.doc',
   });
   console.log(size.error ? size.error : `File size: ${size.size}`);
+  await invoke('download_file', {
+    url: 'https://freetestdata.com/wp-content/uploads/2021/09/1-MB-DOC.doc',
+    output: '1-MB-DOC.doc',
+  });
 });
 </script>
 
