@@ -1,8 +1,12 @@
 <script setup lang="ts">
 defineProps(['menu']);
 const activeMenu = defineModel<number>('activeMenu');
+const disabled = defineModel<boolean>('disabled');
 if (activeMenu.value === undefined) {
   activeMenu.value = 0;
+}
+if (disabled.value === undefined) {
+  disabled.value = false;
 }
 </script>
 
@@ -15,14 +19,15 @@ if (activeMenu.value === undefined) {
           'flex items-center gap-2 px-4 py-3 border-s-[3px] cursor-pointer',
           {
             'border-l-solid b-p-primary-500 bg-p-primary-100 text-p-primary-700':
-              index === activeMenu,
+              !disabled && index === activeMenu,
             'border-transparent text-gray-500 hover:border-gray-100 hover:bg-gray-50 hover:text-gray-700':
-              index !== activeMenu,
+              disabled || index !== activeMenu,
           },
           {
-            'dark:bg-p-primary-900 dark:text-blue-50': index === activeMenu,
+            'dark:bg-p-primary-900 dark:text-blue-50':
+              !disabled && index === activeMenu,
             'dark:text-gray-400 dark:hover:border-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200':
-              index !== activeMenu,
+              disabled || index !== activeMenu,
           },
         ]"
       >

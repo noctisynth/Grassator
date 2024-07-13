@@ -86,9 +86,10 @@ onMounted(async () => {
       </div>
 
       <VerticalMenu
-        class="w-64 hidden sm:block"
+        class="w-64 h-full hidden sm:block"
         :menu="menu"
         :activeMenu="activeMenu"
+        disabled
       />
     </div>
   </main>
