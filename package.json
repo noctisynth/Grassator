@@ -42,7 +42,7 @@
       "prettier --write --ignore-unknown"
     ],
     "src-tauri/**/*.rs": [
-      "cargo fmt --all"
+      "pnpm --filter grassator run fmt"
     ]
   }
 }

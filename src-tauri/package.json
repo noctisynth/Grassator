@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cd .. && pnpm dev",
-    "build": "cd .. && pnpm build"
+    "build": "cd .. && pnpm build",
+    "fmt": "cargo fmt -- "
   }
 }
