@@ -2,6 +2,7 @@
 import { invoke } from '@tauri-apps/api/core';
 import { onMounted, ref, shallowReactive } from 'vue';
 import { FileSize } from '../types';
+import { config } from '../scripts/config';
 
 const menu = shallowReactive([
   {
@@ -47,11 +48,17 @@ onMounted(async () => {
     url: 'https://freetestdata.com/wp-content/uploads/2021/09/1-MB-DOC.doc',
     output: '1-MB-DOC.doc',
   });
+  // We synchronize the config object with the Rust backend
+  config.num_threads = 12;
+  console.log(config);
+  config.num_threads = 39;
+  console.log(config);
 });
 </script>
 
 <template>
   <main class="h-full w-full">
+    <Toast class="max-w-90%"></Toast>
     <div class="flex flex-col h-full w-full">
       <div
         :class="[
@@ -73,7 +80,6 @@ onMounted(async () => {
             :icon="theme.mode === 'light' ? 'pi pi-sun' : 'pi pi-moon'"
             severity="secondary"
             text
-            disabled
           ></Button>
           <Button
             icon="pi pi-sort-alt"

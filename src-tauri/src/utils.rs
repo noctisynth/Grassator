@@ -10,6 +10,8 @@ use std::{
 use parking_lot::Mutex;
 use reqwest::header::CONTENT_LENGTH;
 use reqwest::header::RANGE;
+use tauri::async_runtime::{spawn, Mutex};
+use tauri::Manager;
 use tokio::sync::{Semaphore, TryAcquireError};
 
 pub(crate) async fn get_file_size(url: &str) -> Result<u64, Box<dyn std::error::Error>> {
@@ -27,7 +29,7 @@ pub(crate) async fn get_file_size(url: &str) -> Result<u64, Box<dyn std::error::
 pub(crate) async fn download_file(
     url: &str,
     output_path: &str,
-    config: &crate::state::Config,
+    config: &crate::state::InnerConfig,
 ) -> Result<bool, Box<dyn std::error::Error>> {
     let output = Arc::new(Mutex::new(
         OpenOptions::new()
@@ -36,6 +38,8 @@ pub(crate) async fn download_file(
             .open(output_path)
             .unwrap(),
     ));
+
+    let num_threads = config.num_threads.unwrap_or(12);
 
     let file_size = get_file_size(url).await?;
 
@@ -121,5 +125,24 @@ impl Future for DownloadChunk {
 
         let mut file = self.output.lock();
         Poll::Pending
+    }
+}
+
+pub(crate) fn get_config_path_buf<R: tauri::Runtime>(
+    app: &tauri::AppHandle<R>,
+) -> Result<std::path::PathBuf, crate::models::ErrorPayload> {
+    match app.path().app_config_dir() {
+        Ok(mut dir) => {
+            if let Err(e) = std::fs::create_dir_all(&dir) {
+                return Err(crate::models::ErrorPayload {
+                    message: format!("Failed to create app config directory: {}", e),
+                });
+            };
+            dir.push("config.toml");
+            Ok(dir)
+        }
+        Err(e) => Err(crate::models::ErrorPayload {
+            message: format!("Failed to get app config directory: {}", e),
+        }),
     }
 }
