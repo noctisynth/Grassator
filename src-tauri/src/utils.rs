@@ -1,12 +1,16 @@
 use std::{
     fs::OpenOptions,
+    future::Future,
     io::{Seek, SeekFrom, Write},
+    pin::Pin,
     sync::Arc,
+    task::Poll,
 };
 
+use parking_lot::Mutex;
 use reqwest::header::CONTENT_LENGTH;
 use reqwest::header::RANGE;
-use tauri::async_runtime::{spawn, Mutex};
+use tokio::sync::{Semaphore, TryAcquireError};
 
 pub(crate) async fn get_file_size(url: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
@@ -34,27 +38,27 @@ pub(crate) async fn download_file(
     ));
 
     let file_size = get_file_size(url).await?;
-    let mut handles = Vec::new();
+
     let chunk_size = file_size / config.num_threads as u64;
+    let mut delivered = 0;
 
-    for i in 0..config.num_threads {
-        let start = i as u64 * chunk_size;
-        let end = if i == config.num_threads - 1 {
-            file_size - 1
-        } else {
-            (i as u64 + 1) * chunk_size - 1
+    let semaphore = Arc::new(Semaphore::new(config.num_threads as usize));
+
+    while delivered < file_size {
+        let start = delivered;
+        let end = file_size + chunk_size.min(file_size - delivered);
+        delivered += end - start;
+
+        let future = DownloadChunk {
+            url: url.to_string(),
+            start,
+            end,
+            output: output.clone(),
+            client: reqwest::Client::new(),
+            semaphore: semaphore.clone(),
+            response: None,
+            content: None,
         };
-
-        let url = url.to_string();
-        let output = Arc::clone(&output);
-        let handle = spawn(async move {
-            download_chunk(&url, start, end, &output).await.unwrap();
-        });
-        handles.push(handle);
-    }
-
-    for handle in handles {
-        handle.await.unwrap();
     }
     Ok(true)
 }
@@ -69,10 +73,53 @@ pub(crate) async fn download_chunk(
     let range_header = format!("bytes={}-{}", start, end);
     let response = client.get(url).header(RANGE, range_header).send().await?;
 
-    let mut file = output.lock().await;
+    let mut file = output.lock();
     file.seek(SeekFrom::Start(start))?;
     let content = response.bytes().await?;
     file.write_all(&content)?;
 
     Ok(())
+}
+
+pub(crate) struct DownloadChunk {
+    url: String,
+    start: u64,
+    end: u64,
+    output: Arc<Mutex<std::fs::File>>,
+    client: reqwest::Client,
+    semaphore: Arc<Semaphore>,
+    response: Option<reqwest::Response>,
+    content: Option<reqwest::Body>,
+}
+
+impl Future for DownloadChunk {
+    type Output = Result<bool, Box<dyn std::error::Error>>;
+
+    fn poll(mut self: Pin<&mut Self>, cx: &mut std::task::Context<'_>) -> Poll<Self::Output> {
+        let permit = match self.semaphore.try_acquire() {
+            Ok(permit) => permit,
+            Err(TryAcquireError::NoPermits) => return Poll::Pending,
+            Err(TryAcquireError::Closed) => {
+                return Poll::Ready(Err(TryAcquireError::Closed.into()))
+            }
+        };
+
+        let range_header = format!("bytes={}-{}", self.start, self.end);
+
+        // let response = if self.response.is_none() {
+        //     let response = Pin::new(
+        //         &mut self
+        //             .client
+        //             .get(&self.url)
+        //             .header(RANGE, range_header)
+        //             .send(),
+        //     )
+        //     .poll(cx)?;
+        // } else {
+        //     self.response.take().unwrap()
+        // };
+
+        let mut file = self.output.lock();
+        Poll::Pending
+    }
 }
