@@ -13,7 +13,11 @@ export async function loadConfig(): Promise<ConfigResult> {
       invoke('set_config', {
         newConfig: target,
       }).catch((e: ErrorPayload) => {
-        toast.add({ severity: 'error', summary: 'Error', detail: e });
+        toast.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: e.message ?? e,
+        });
       });
       return result;
     },
