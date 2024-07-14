@@ -1144,12 +1144,14 @@ dependencies = [
 name = "grassator"
 version = "0.1.1"
 dependencies = [
+ "parking_lot",
  "reqwest",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
  "tauri-plugin-shell",
+ "tokio",
 ]
 
 [[package]]
@@ -3696,6 +3698,7 @@ dependencies = [
  "libc",
  "mio",
  "num_cpus",
+ "parking_lot",
  "pin-project-lite",
  "socket2",
  "windows-sys 0.48.0",
