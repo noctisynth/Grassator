@@ -87,14 +87,14 @@ pub(crate) fn get_config_path_buf<R: tauri::Runtime>(
         Ok(mut dir) => {
             if let Err(e) = std::fs::create_dir_all(&dir) {
                 return Err(crate::models::ErrorPayload {
-                    error: format!("Failed to create app config directory: {}", e),
+                    message: format!("Failed to create app config directory: {}", e),
                 });
             };
             dir.push("config.toml");
             Ok(dir)
         }
         Err(e) => Err(crate::models::ErrorPayload {
-            error: format!("Failed to get app config directory: {}", e),
+            message: format!("Failed to get app config directory: {}", e),
         }),
     }
 }

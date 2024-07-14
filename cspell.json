@@ -17,7 +17,8 @@
         "tauri",
         "toastservice",
         "unocss",
-        "unplugin"
+        "unplugin",
+        "usetoast"
     ],
     "ignorePaths": [
         // Tauri files

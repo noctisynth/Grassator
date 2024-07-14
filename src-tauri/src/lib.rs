@@ -8,9 +8,8 @@ mod utils;
 async fn load_config<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     config: tauri::State<'_, state::Config>,
-) -> Result<state::InnerConfig, ErrorPayload> {
+) -> Result<models::ConfigResult, ErrorPayload> {
     let config_file_path = utils::get_config_path_buf(&app)?;
-    println!("Config file path: {}", config_file_path.to_string_lossy());
     let config_data = if !config_file_path.exists() {
         let config_data = toml::to_string_pretty(&state::InnerConfig::default()).unwrap();
         println!("{}", config_data);
@@ -21,7 +20,10 @@ async fn load_config<R: tauri::Runtime>(
     };
     let inner_config: state::InnerConfig = toml::from_str(&config_data).unwrap();
     *config.inner().inner.write().await = inner_config.clone();
-    Ok(inner_config)
+    Ok(models::ConfigResult {
+        inner: inner_config,
+        file_path: config_file_path.to_string_lossy().to_string(),
+    })
 }
 
 #[tauri::command]
@@ -39,7 +41,7 @@ async fn set_config<R: tauri::Runtime>(
     let toml = toml::to_string_pretty(&new_config).unwrap();
     if let Err(e) = std::fs::write(&config_file_path, toml) {
         return Err(ErrorPayload {
-            error: format!("Failed to update config file: {}", e),
+            message: format!("Failed to update config file: {}", e),
         });
     };
     *config.inner().inner.write().await = new_config;

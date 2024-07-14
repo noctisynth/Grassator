@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::state::InnerConfig;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub(crate) struct FileSize {
     pub(crate) size: u64,
@@ -18,6 +20,12 @@ pub(crate) struct SetConfigResult {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+pub(crate) struct ConfigResult {
+    pub(crate) inner: InnerConfig,
+    pub(crate) file_path: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub(crate) struct ErrorPayload {
-    pub(crate) error: String,
+    pub(crate) message: String,
 }

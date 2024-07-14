@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { loadConfig } from './scripts/config';
 
 onMounted(async () => {
-  loadConfig();
+  await loadConfig();
 });
 </script>
 
