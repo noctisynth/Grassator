@@ -7,6 +7,7 @@ use std::{
 use reqwest::header::CONTENT_LENGTH;
 use reqwest::header::RANGE;
 use tauri::async_runtime::{spawn, Mutex};
+use tauri::Manager;
 
 pub(crate) async fn get_file_size(url: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
@@ -23,7 +24,7 @@ pub(crate) async fn get_file_size(url: &str) -> Result<u64, Box<dyn std::error::
 pub(crate) async fn download_file(
     url: &str,
     output_path: &str,
-    config: &crate::state::Config,
+    config: &crate::state::InnerConfig,
 ) -> Result<bool, Box<dyn std::error::Error>> {
     let output = Arc::new(Mutex::new(
         OpenOptions::new()
@@ -33,13 +34,15 @@ pub(crate) async fn download_file(
             .unwrap(),
     ));
 
+    let num_threads = config.num_threads.unwrap_or(12);
+
     let file_size = get_file_size(url).await?;
     let mut handles = Vec::new();
-    let chunk_size = file_size / config.num_threads as u64;
+    let chunk_size = file_size / num_threads as u64;
 
-    for i in 0..config.num_threads {
+    for i in 0..num_threads {
         let start = i as u64 * chunk_size;
-        let end = if i == config.num_threads - 1 {
+        let end = if i == num_threads - 1 {
             file_size - 1
         } else {
             (i as u64 + 1) * chunk_size - 1
@@ -75,4 +78,23 @@ pub(crate) async fn download_chunk(
     file.write_all(&content)?;
 
     Ok(())
+}
+
+pub(crate) fn get_config_path_buf<R: tauri::Runtime>(
+    app: &tauri::AppHandle<R>,
+) -> Result<std::path::PathBuf, crate::models::ErrorPayload> {
+    match app.path().app_config_dir() {
+        Ok(mut dir) => {
+            if let Err(e) = std::fs::create_dir_all(&dir) {
+                return Err(crate::models::ErrorPayload {
+                    error: format!("Failed to create app config directory: {}", e),
+                });
+            };
+            dir.push("config.toml");
+            Ok(dir)
+        }
+        Err(e) => Err(crate::models::ErrorPayload {
+            error: format!("Failed to get app config directory: {}", e),
+        }),
+    }
 }

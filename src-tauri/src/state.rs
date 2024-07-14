@@ -1,16 +1,29 @@
 use serde::{Deserialize, Serialize};
+use tauri::async_runtime::RwLock;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+pub(crate) struct InnerConfig {
+    pub(crate) preset_file: Option<String>,
+    pub(crate) num_threads: Option<u32>,
+}
+
+impl Default for InnerConfig {
+    fn default() -> Self {
+        Self {
+            preset_file: None,
+            num_threads: Some(12),
+        }
+    }
+}
+
 pub(crate) struct Config {
-    pub(crate) preset_file: String,
-    pub(crate) num_threads: u32,
+    pub(crate) inner: RwLock<InnerConfig>,
 }
 
 impl Default for Config {
     fn default() -> Self {
         Self {
-            preset_file: String::from("presets/default.json"),
-            num_threads: 7,
+            inner: RwLock::new(InnerConfig::default()),
         }
     }
 }
