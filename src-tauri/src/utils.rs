@@ -10,7 +10,6 @@ use std::{
 use parking_lot::Mutex;
 use reqwest::header::CONTENT_LENGTH;
 use reqwest::header::RANGE;
-use tauri::async_runtime::{spawn, Mutex};
 use tauri::Manager;
 use tokio::sync::{Semaphore, TryAcquireError};
 
@@ -43,10 +42,10 @@ pub(crate) async fn download_file(
 
     let file_size = get_file_size(url).await?;
 
-    let chunk_size = file_size / config.num_threads as u64;
+    let chunk_size = 10240;
     let mut delivered = 0;
 
-    let semaphore = Arc::new(Semaphore::new(config.num_threads as usize));
+    let semaphore = Arc::new(Semaphore::new(num_threads as usize));
 
     while delivered < file_size {
         let start = delivered;
