@@ -73,18 +73,21 @@ onMounted(async () => {
             :icon="theme.mode === 'light' ? 'pi pi-sun' : 'pi pi-moon'"
             severity="secondary"
             text
+            disabled
           ></Button>
           <Button
             icon="pi pi-sort-alt"
             class="ml-2"
             severity="secondary"
             text
+            disabled
           ></Button>
           <Button
             icon="pi pi-plus"
             class="ml-2"
             severity="secondary"
             text
+            disabled
           ></Button>
         </div>
       </div>
