@@ -46,6 +46,7 @@ pub(crate) async fn download_file(
     let mut delivered = 0;
 
     let semaphore = Arc::new(Semaphore::new(num_threads as usize));
+    let mut futures = vec![];
 
     while delivered < file_size {
         let start = delivered;
@@ -59,29 +60,16 @@ pub(crate) async fn download_file(
             output: output.clone(),
             client: reqwest::Client::new(),
             semaphore: semaphore.clone(),
-            response: None,
-            content: None,
+            content_fut: None.into(),
+            response_fut: None.into(),
         };
+        futures.push(future);
+    }
+
+    for future in futures {
+        future.await?;
     }
     Ok(true)
-}
-
-pub(crate) async fn download_chunk(
-    url: &str,
-    start: u64,
-    end: u64,
-    output: &Arc<Mutex<std::fs::File>>,
-) -> Result<(), Box<dyn std::error::Error>> {
-    let client = reqwest::Client::new();
-    let range_header = format!("bytes={}-{}", start, end);
-    let response = client.get(url).header(RANGE, range_header).send().await?;
-
-    let mut file = output.lock();
-    file.seek(SeekFrom::Start(start))?;
-    let content = response.bytes().await?;
-    file.write_all(&content)?;
-
-    Ok(())
 }
 
 pub(crate) struct DownloadChunk {
@@ -91,14 +79,14 @@ pub(crate) struct DownloadChunk {
     output: Arc<Mutex<std::fs::File>>,
     client: reqwest::Client,
     semaphore: Arc<Semaphore>,
-    response: Option<reqwest::Response>,
-    content: Option<reqwest::Body>,
+    response_fut: Mutex<Option<crate::types::ResponseFuture>>,
+    content_fut: Mutex<Option<crate::types::ContentFuture>>,
 }
 
 impl Future for DownloadChunk {
-    type Output = Result<bool, Box<dyn std::error::Error>>;
+    type Output = Result<(), Box<dyn std::error::Error>>;
 
-    fn poll(mut self: Pin<&mut Self>, cx: &mut std::task::Context<'_>) -> Poll<Self::Output> {
+    fn poll(self: Pin<&mut Self>, cx: &mut std::task::Context<'_>) -> Poll<Self::Output> {
         let permit = match self.semaphore.try_acquire() {
             Ok(permit) => permit,
             Err(TryAcquireError::NoPermits) => return Poll::Pending,
@@ -109,21 +97,44 @@ impl Future for DownloadChunk {
 
         let range_header = format!("bytes={}-{}", self.start, self.end);
 
-        // let response = if self.response.is_none() {
-        //     let response = Pin::new(
-        //         &mut self
-        //             .client
-        //             .get(&self.url)
-        //             .header(RANGE, range_header)
-        //             .send(),
-        //     )
-        //     .poll(cx)?;
-        // } else {
-        //     self.response.take().unwrap()
-        // };
+        let mut response_fut = self.response_fut.lock();
+        if response_fut.is_none() {
+            response_fut.replace(Box::pin(
+                self.client
+                    .get(&self.url)
+                    .header(RANGE, range_header)
+                    .send(),
+            ));
+        };
 
+        let mut content_fut = self.content_fut.lock();
+        if content_fut.is_none() {
+            content_fut.replace(match response_fut.as_mut().unwrap().as_mut().poll(cx) {
+                Poll::Ready(Ok(response)) => Box::pin(response.bytes()),
+                Poll::Ready(Err(_)) => {
+                    // TODO: emit error event
+                    response_fut.take();
+                    return Poll::Pending;
+                }
+                Poll::Pending => return Poll::Pending,
+            });
+        }
+
+        let content = match content_fut.as_mut().unwrap().as_mut().poll(cx) {
+            Poll::Ready(Ok(content)) => content,
+            Poll::Ready(Err(_)) => {
+                // TODO: emit error event
+                response_fut.take();
+                content_fut.take();
+                return Poll::Pending;
+            }
+            Poll::Pending => return Poll::Pending,
+        };
         let mut file = self.output.lock();
-        Poll::Pending
+        file.seek(SeekFrom::Start(self.start))?;
+        file.write_all(&content)?;
+        drop(permit);
+        Poll::Ready(Ok(()))
     }
 }
 

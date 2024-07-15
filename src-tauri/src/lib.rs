@@ -2,6 +2,7 @@ use models::ErrorPayload;
 
 mod models;
 mod state;
+mod types;
 mod utils;
 
 #[tauri::command]
