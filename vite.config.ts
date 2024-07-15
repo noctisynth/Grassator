@@ -6,7 +6,6 @@ import { PrimeVueResolver } from "@primevue/auto-import-resolver";
 import TurboConsole from "unplugin-turbo-console/vite";
 import UnoCSS from "unocss/vite";
 
-// @ts-expect-error process is a nodejs global
 const mobile = !!/android|ios/.exec(process.env.TAURI_ENV_PLATFORM);
 
 // https://vitejs.dev/config/
