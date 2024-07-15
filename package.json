@@ -32,7 +32,7 @@
     "lint-staged": "^15.2.7",
     "prettier": "3.3.2",
     "typescript": "^5.5.3",
-    "unplugin-turbo-console": "^1.9.3",
+    "unplugin-turbo-console": "^1.9.5",
     "unplugin-vue-components": "^0.27.2",
     "vite": "^5.3.3",
     "vue-tsc": "^2.0.26"
