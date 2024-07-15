@@ -30,7 +30,7 @@
     "husky": "^9.0.11",
     "internal-ip": "^8.0.0",
     "lint-staged": "^15.2.7",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "typescript": "^5.5.3",
     "unplugin-turbo-console": "^1.9.5",
     "unplugin-vue-components": "^0.27.2",
