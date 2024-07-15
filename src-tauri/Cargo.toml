@@ -1,6 +1,6 @@
 [package]
 name = "grassator"
-version = "0.1.1"
+version = "0.1.2"
 description = "Secure, fast multi-process downloader"
 authors = ["苏向夜 <fu050409@163.com>"]
 edition = "2021"
