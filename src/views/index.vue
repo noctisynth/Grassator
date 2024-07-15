@@ -41,12 +41,12 @@ const theme = ref(
 
 onMounted(async () => {
   const size: FileSize = await invoke('get_file_size', {
-    url: 'https://freetestdata.com/wp-content/uploads/2021/09/1-MB-DOC.doc',
+    url: 'https://vscode.download.prss.microsoft.com/dbazure/download/stable/f1e16e1e6214d7c44d078b1f0607b2388f29d729/VSCodeUserSetup-x64-1.91.1.exe',
   });
   console.log(size.error ? size.error : `File size: ${size.size}`);
   await invoke('download_file', {
-    url: 'https://freetestdata.com/wp-content/uploads/2021/09/1-MB-DOC.doc',
-    output: '1-MB-DOC.doc',
+    url: 'https://vscode.download.prss.microsoft.com/dbazure/download/stable/f1e16e1e6214d7c44d078b1f0607b2388f29d729/VSCodeUserSetup-x64-1.91.1.exe',
+    output: 'VSCodeUserSetup-x64-1.91.1.exe',
   });
   // We synchronize the config object with the Rust backend
   config.num_threads = 12;

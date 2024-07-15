@@ -1,13 +1,17 @@
 use std::{
     fs::OpenOptions,
+    future::Future,
     io::{Seek, SeekFrom, Write},
+    pin::Pin,
     sync::Arc,
+    task::Poll,
 };
 
+use parking_lot::Mutex;
 use reqwest::header::CONTENT_LENGTH;
 use reqwest::header::RANGE;
-use tauri::async_runtime::{spawn, Mutex};
 use tauri::Manager;
+use tokio::sync::{Semaphore, TryAcquireError};
 
 pub(crate) async fn get_file_size(url: &str) -> Result<u64, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
@@ -37,47 +41,101 @@ pub(crate) async fn download_file(
     let num_threads = config.num_threads.unwrap_or(12);
 
     let file_size = get_file_size(url).await?;
-    let mut handles = Vec::new();
-    let chunk_size = file_size / num_threads as u64;
 
-    for i in 0..num_threads {
-        let start = i as u64 * chunk_size;
-        let end = if i == num_threads - 1 {
-            file_size - 1
-        } else {
-            (i as u64 + 1) * chunk_size - 1
+    let chunk_size = 10240;
+    let mut delivered = 0;
+
+    let semaphore = Arc::new(Semaphore::new(num_threads as usize));
+    let mut futures = vec![];
+
+    while delivered < file_size {
+        let start = delivered;
+        let end = file_size + chunk_size.min(file_size - delivered);
+        delivered += end - start;
+
+        let future = DownloadChunk {
+            url: url.to_string(),
+            start,
+            end,
+            output: output.clone(),
+            client: reqwest::Client::new(),
+            semaphore: semaphore.clone(),
+            content_fut: None.into(),
+            response_fut: None.into(),
         };
-
-        let url = url.to_string();
-        let output = Arc::clone(&output);
-        let handle = spawn(async move {
-            download_chunk(&url, start, end, &output).await.unwrap();
-        });
-        handles.push(handle);
+        futures.push(future);
     }
 
-    for handle in handles {
-        handle.await.unwrap();
+    for future in futures {
+        future.await?;
     }
     Ok(true)
 }
 
-pub(crate) async fn download_chunk(
-    url: &str,
+pub(crate) struct DownloadChunk {
+    url: String,
     start: u64,
     end: u64,
-    output: &Arc<Mutex<std::fs::File>>,
-) -> Result<(), Box<dyn std::error::Error>> {
-    let client = reqwest::Client::new();
-    let range_header = format!("bytes={}-{}", start, end);
-    let response = client.get(url).header(RANGE, range_header).send().await?;
+    output: Arc<Mutex<std::fs::File>>,
+    client: reqwest::Client,
+    semaphore: Arc<Semaphore>,
+    response_fut: Mutex<Option<crate::types::ResponseFuture>>,
+    content_fut: Mutex<Option<crate::types::ContentFuture>>,
+}
 
-    let mut file = output.lock().await;
-    file.seek(SeekFrom::Start(start))?;
-    let content = response.bytes().await?;
-    file.write_all(&content)?;
+impl Future for DownloadChunk {
+    type Output = Result<(), Box<dyn std::error::Error>>;
 
-    Ok(())
+    fn poll(self: Pin<&mut Self>, cx: &mut std::task::Context<'_>) -> Poll<Self::Output> {
+        let permit = match self.semaphore.try_acquire() {
+            Ok(permit) => permit,
+            Err(TryAcquireError::NoPermits) => return Poll::Pending,
+            Err(TryAcquireError::Closed) => {
+                return Poll::Ready(Err(TryAcquireError::Closed.into()))
+            }
+        };
+
+        let range_header = format!("bytes={}-{}", self.start, self.end);
+
+        let mut response_fut = self.response_fut.lock();
+        if response_fut.is_none() {
+            response_fut.replace(Box::pin(
+                self.client
+                    .get(&self.url)
+                    .header(RANGE, range_header)
+                    .send(),
+            ));
+        };
+
+        let mut content_fut = self.content_fut.lock();
+        if content_fut.is_none() {
+            content_fut.replace(match response_fut.as_mut().unwrap().as_mut().poll(cx) {
+                Poll::Ready(Ok(response)) => Box::pin(response.bytes()),
+                Poll::Ready(Err(_)) => {
+                    // TODO: emit error event
+                    response_fut.take();
+                    return Poll::Pending;
+                }
+                Poll::Pending => return Poll::Pending,
+            });
+        }
+
+        let content = match content_fut.as_mut().unwrap().as_mut().poll(cx) {
+            Poll::Ready(Ok(content)) => content,
+            Poll::Ready(Err(_)) => {
+                // TODO: emit error event
+                response_fut.take();
+                content_fut.take();
+                return Poll::Pending;
+            }
+            Poll::Pending => return Poll::Pending,
+        };
+        let mut file = self.output.lock();
+        file.seek(SeekFrom::Start(self.start))?;
+        file.write_all(&content)?;
+        drop(permit);
+        Poll::Ready(Ok(()))
+    }
 }
 
 pub(crate) fn get_config_path_buf<R: tauri::Runtime>(
