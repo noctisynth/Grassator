@@ -18,7 +18,8 @@
         "toastservice",
         "unocss",
         "unplugin",
-        "usetoast"
+        "usetoast",
+        "vitepress"
     ],
     "ignorePaths": [
         // Tauri files
