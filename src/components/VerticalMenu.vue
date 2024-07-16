@@ -11,7 +11,7 @@ if (disabled.value === undefined) {
 </script>
 
 <template>
-  <ul>
+  <ul class="shadow-lg bg-white dark:bg-p-surface-900">
     <li v-for="(item, index) in menu" :key="index">
       <div
         @click="activeMenu = index"

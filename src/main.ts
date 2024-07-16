@@ -11,6 +11,7 @@ import Aura from '@primevue/themes/aura';
 import Ripple from 'primevue/ripple';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import Tooltip from 'primevue/tooltip';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -28,6 +29,7 @@ app.use(PrimeVue, {
 });
 app.use(ToastService);
 app.directive('ripple', Ripple);
+app.directive('tooltip', Tooltip);
 app.component('Toast', Toast);
 
 app.use(pinia);
