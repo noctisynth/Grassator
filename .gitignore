@@ -25,3 +25,7 @@ dist-ssr
 
 # Unplugin
 components.d.ts
+
+# Vitepress
+docs/.vitepress/dist
+docs/.vitepress/cache
