@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: 'Grassator'
-  text: '安全，现代和快速的多进程下载器'
+  text: '安全，现代和快速的异步下载器'
   tagline:
   actions:
     - theme: brand

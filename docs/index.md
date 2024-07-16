@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Grassator"
-  text: "Secure, modern and fast multi-process downloader"
+  text: "Secure, modern and fast asynchronous downloader"
   tagline: 
   actions:
     - theme: brand
