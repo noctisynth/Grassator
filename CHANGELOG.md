@@ -1,5 +1,11 @@
 # @noctisynth/grassator
 
+## 0.1.3
+
+### Patch Changes
+
+- b512a33: Improve dashboard preformance
+
 ## 0.1.2
 
 ### Patch Changes
