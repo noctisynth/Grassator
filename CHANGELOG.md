@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- b512a33: Improve dashboard preformance
+- b512a33: Improve dashboard performance
 
 ## 0.1.2
 
