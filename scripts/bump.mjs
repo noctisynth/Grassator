@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 
 execSync('npx changeset version', { stdio: 'inherit' });
 execSync('pnpm install --no-frozen-lockfile', { stdio: 'inherit' });
-execSync('npx changeset tag', { stdio: 'inherit' });
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
