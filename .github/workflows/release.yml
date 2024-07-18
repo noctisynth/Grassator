@@ -36,3 +36,4 @@ jobs:
           version: pnpm bump
           title: "chore(release): version packages"
           commit: "chore(release): version packages"
+          publish: pnpm release
