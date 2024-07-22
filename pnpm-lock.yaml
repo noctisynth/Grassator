@@ -28,7 +28,7 @@ importers:
         version: 4.0.0(@primeuix/utils@0.0.5)(vue@3.4.31(typescript@5.5.3))
       unocss:
         specifier: ^0.61.3
-        version: 0.61.3(postcss@8.4.39)(rollup@4.18.1)(vite@5.3.3)
+        version: 0.61.3(postcss@8.4.39)(rollup@4.18.1)(vite@5.3.4)
       vue:
         specifier: ^3.4.31
         version: 3.4.31(typescript@5.5.3)
@@ -47,7 +47,7 @@ importers:
         version: 2.0.0-beta.22
       '@vitejs/plugin-vue':
         specifier: ^5.0.5
-        version: 5.0.5(vite@5.3.3)(vue@3.4.31(typescript@5.5.3))
+        version: 5.0.5(vite@5.3.4)(vue@3.4.31(typescript@5.5.3))
       husky:
         specifier: ^9.0.11
         version: 9.0.11
@@ -65,13 +65,13 @@ importers:
         version: 5.5.3
       unplugin-turbo-console:
         specifier: ^1.9.5
-        version: 1.9.5(esbuild@0.21.5)(rollup@4.18.1)(vite@5.3.3)(vue@3.4.31(typescript@5.5.3))
+        version: 1.9.5(esbuild@0.21.5)(rollup@4.18.1)(vite@5.3.4)(vue@3.4.31(typescript@5.5.3))
       unplugin-vue-components:
         specifier: ^0.27.2
         version: 0.27.2(@babel/parser@7.24.8)(rollup@4.18.1)(vue@3.4.31(typescript@5.5.3))
       vite:
-        specifier: ^5.3.3
-        version: 5.3.3
+        specifier: ^5.3.4
+        version: 5.3.4
       vitepress:
         specifier: ^1.3.1
         version: 1.3.1(@algolia/client-search@4.24.0)(postcss@8.4.39)(search-insights@2.15.0)(typescript@5.5.3)
@@ -638,55 +638,46 @@ packages:
     resolution: {integrity: sha512-P9bSiAUnSSM7EmyRK+e5wgpqai86QOSv8BwvkGjLwYuOpaeomiZWifEos517CwbG+aZl1T4clSE1YqqH2JRs+g==}
     cpu: [arm]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.18.1':
     resolution: {integrity: sha512-5RnjpACoxtS+aWOI1dURKno11d7krfpGDEn19jI8BuWmSBbUC4ytIADfROM1FZrFhQPSoP+KEa3NlEScznBTyQ==}
     cpu: [arm]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.18.1':
     resolution: {integrity: sha512-8mwmGD668m8WaGbthrEYZ9CBmPug2QPGWxhJxh/vCgBjro5o96gL04WLlg5BA233OCWLqERy4YUzX3bJGXaJgQ==}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.18.1':
     resolution: {integrity: sha512-dJX9u4r4bqInMGOAQoGYdwDP8lQiisWb9et+T84l2WXk41yEej8v2iGKodmdKimT8cTAYt0jFb+UEBxnPkbXEQ==}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-linux-powerpc64le-gnu@4.18.1':
     resolution: {integrity: sha512-V72cXdTl4EI0x6FNmho4D502sy7ed+LuVW6Ym8aI6DRQ9hQZdp5sj0a2usYOlqvFBNKQnLQGwmYnujo2HvjCxQ==}
     cpu: [ppc64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-gnu@4.18.1':
     resolution: {integrity: sha512-f+pJih7sxoKmbjghrM2RkWo2WHUW8UbfxIQiWo5yeCaCM0TveMEuAzKJte4QskBp1TIinpnRcxkquY+4WuY/tg==}
     cpu: [riscv64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-s390x-gnu@4.18.1':
     resolution: {integrity: sha512-qb1hMMT3Fr/Qz1OKovCuUM11MUNLUuHeBC2DPPAWUYYUAOFWaxInaTwTQmc7Fl5La7DShTEpmYwgdt2hG+4TEg==}
     cpu: [s390x]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.18.1':
     resolution: {integrity: sha512-7O5u/p6oKUFYjRbZkL2FLbwsyoJAjyeXHCU3O4ndvzg2OFO2GinFPSJFGbiwFDaCFc+k7gs9CF243PwdPQFh5g==}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.18.1':
     resolution: {integrity: sha512-pDLkYITdYrH/9Cv/Vlj8HppDuLMDUBmgsM0+N+xLtFd18aXgM9Nyqupb/Uw+HeidhfYg2lD6CXvz6CjoVOaKjQ==}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@rollup/rollup-win32-arm64-msvc@4.18.1':
     resolution: {integrity: sha512-W2ZNI323O/8pJdBGil1oCauuCzmVd9lDmWBBqxYZcOqWD6aWqJtVBQ1dFrF4dYpZPks6F+xCZHfzG5hYlSHZ6g==}
@@ -736,28 +727,24 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [glibc]
 
   '@tauri-apps/cli-linux-arm64-musl@2.0.0-beta.22':
     resolution: {integrity: sha512-ak/RdmaV7sATQmNOxlpHVlbKlrdquH7WH8nOv82X+iK+1HgAOGGqLqBUMzzhkGqo9SHQ9zJ6A2yOo7Z6TJXMmQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
-    libc: [musl]
 
   '@tauri-apps/cli-linux-x64-gnu@2.0.0-beta.22':
     resolution: {integrity: sha512-9t+jQeMqBdXz51ikTh1PQFG/gs9PBzXmtMcIzUxE0juvH/ynjw0Vf+yZbNmwqVS9g7cj8XiBXoc6/N41SZE2cA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [glibc]
 
   '@tauri-apps/cli-linux-x64-musl@2.0.0-beta.22':
     resolution: {integrity: sha512-PemcztfHG3HAuuo7HcnhfDrtN9NT7kueyNg8ipxJNPMa+s4K7kfieViyEiMW5pTr2F5WG/UuBSNcuwY+DVCcPA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
-    libc: [musl]
 
   '@tauri-apps/cli-win32-arm64-msvc@2.0.0-beta.22':
     resolution: {integrity: sha512-EgKoG/jGEtTzhOp7ISjMdQsfd8IOG/5yZhO9Z4L/u7oB9mprKAJohYs24+ZxJtq2bOz4f/ZIysZ19nbkpxUzrg==}
@@ -2045,8 +2032,8 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  vite@5.3.3:
-    resolution: {integrity: sha512-NPQdeCU0Dv2z5fu+ULotpuq5yfCS1BzKUIPhNbP3YBfAMGJXbt2nS+sbTFu+qchaqWTD+H3JK++nRwr6XIcp6A==}
+  vite@5.3.4:
+    resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -2978,13 +2965,13 @@ snapshots:
 
   '@types/web-bluetooth@0.0.20': {}
 
-  '@unocss/astro@0.61.3(rollup@4.18.1)(vite@5.3.3)':
+  '@unocss/astro@0.61.3(rollup@4.18.1)(vite@5.3.4)':
     dependencies:
       '@unocss/core': 0.61.3
       '@unocss/reset': 0.61.3
-      '@unocss/vite': 0.61.3(rollup@4.18.1)(vite@5.3.3)
+      '@unocss/vite': 0.61.3(rollup@4.18.1)(vite@5.3.4)
     optionalDependencies:
-      vite: 5.3.3
+      vite: 5.3.4
     transitivePeerDependencies:
       - rollup
 
@@ -3115,7 +3102,7 @@ snapshots:
     dependencies:
       '@unocss/core': 0.61.3
 
-  '@unocss/vite@0.61.3(rollup@4.18.1)(vite@5.3.3)':
+  '@unocss/vite@0.61.3(rollup@4.18.1)(vite@5.3.4)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@rollup/pluginutils': 5.1.0(rollup@4.18.1)
@@ -3127,13 +3114,13 @@ snapshots:
       chokidar: 3.6.0
       fast-glob: 3.3.2
       magic-string: 0.30.10
-      vite: 5.3.3
+      vite: 5.3.4
     transitivePeerDependencies:
       - rollup
 
-  '@vitejs/plugin-vue@5.0.5(vite@5.3.3)(vue@3.4.31(typescript@5.5.3))':
+  '@vitejs/plugin-vue@5.0.5(vite@5.3.4)(vue@3.4.31(typescript@5.5.3))':
     dependencies:
-      vite: 5.3.3
+      vite: 5.3.4
       vue: 3.4.31(typescript@5.5.3)
 
   '@volar/language-core@2.4.0-alpha.15':
@@ -4190,9 +4177,9 @@ snapshots:
 
   universalify@0.1.2: {}
 
-  unocss@0.61.3(postcss@8.4.39)(rollup@4.18.1)(vite@5.3.3):
+  unocss@0.61.3(postcss@8.4.39)(rollup@4.18.1)(vite@5.3.4):
     dependencies:
-      '@unocss/astro': 0.61.3(rollup@4.18.1)(vite@5.3.3)
+      '@unocss/astro': 0.61.3(rollup@4.18.1)(vite@5.3.4)
       '@unocss/cli': 0.61.3(rollup@4.18.1)
       '@unocss/core': 0.61.3
       '@unocss/extractor-arbitrary-variants': 0.61.3
@@ -4211,15 +4198,15 @@ snapshots:
       '@unocss/transformer-compile-class': 0.61.3
       '@unocss/transformer-directives': 0.61.3
       '@unocss/transformer-variant-group': 0.61.3
-      '@unocss/vite': 0.61.3(rollup@4.18.1)(vite@5.3.3)
+      '@unocss/vite': 0.61.3(rollup@4.18.1)(vite@5.3.4)
     optionalDependencies:
-      vite: 5.3.3
+      vite: 5.3.4
     transitivePeerDependencies:
       - postcss
       - rollup
       - supports-color
 
-  unplugin-turbo-console@1.9.5(esbuild@0.21.5)(rollup@4.18.1)(vite@5.3.3)(vue@3.4.31(typescript@5.5.3)):
+  unplugin-turbo-console@1.9.5(esbuild@0.21.5)(rollup@4.18.1)(vite@5.3.4)(vue@3.4.31(typescript@5.5.3)):
     dependencies:
       '@rollup/pluginutils': 5.1.0(rollup@4.18.1)
       ast-kit: 1.0.0
@@ -4232,7 +4219,7 @@ snapshots:
     optionalDependencies:
       esbuild: 0.21.5
       rollup: 4.18.1
-      vite: 5.3.3
+      vite: 5.3.4
       vue: 3.4.31(typescript@5.5.3)
     transitivePeerDependencies:
       - uWebSockets.js
@@ -4269,7 +4256,7 @@ snapshots:
       escalade: 3.1.2
       picocolors: 1.0.1
 
-  vite@5.3.3:
+  vite@5.3.4:
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.39
@@ -4284,7 +4271,7 @@ snapshots:
       '@shikijs/core': 1.10.3
       '@shikijs/transformers': 1.10.3
       '@types/markdown-it': 14.1.1
-      '@vitejs/plugin-vue': 5.0.5(vite@5.3.3)(vue@3.4.31(typescript@5.5.3))
+      '@vitejs/plugin-vue': 5.0.5(vite@5.3.4)(vue@3.4.31(typescript@5.5.3))
       '@vue/devtools-api': 7.3.6
       '@vue/shared': 3.4.31
       '@vueuse/core': 10.11.0(vue@3.4.31(typescript@5.5.3))
@@ -4293,7 +4280,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.0.0
       shiki: 1.10.3
-      vite: 5.3.3
+      vite: 5.3.4
       vue: 3.4.31(typescript@5.5.3)
     optionalDependencies:
       postcss: 8.4.39
