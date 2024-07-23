@@ -17,7 +17,7 @@ const menu = shallowReactive([
   },
 ]);
 const activeMenu = ref<number>(0);
-const searchtext = ref<string>('');
+const searchText = ref<string>('');
 
 const theme = ref(
   new Proxy(
@@ -75,7 +75,7 @@ onMounted(async () => {
               <i class="pi pi-search"></i>
             </InputIcon>
             <InputText
-              v-model="searchtext"
+              v-model="searchText"
               size="small"
               placeholder="Search"
               disabled
