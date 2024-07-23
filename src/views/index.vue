@@ -69,7 +69,7 @@ onMounted(async () => {
       >
         <div class="flex items-center gap-2">
           <Avatar image="/logo.png"></Avatar>
-          <IconField v-tooltip="'Unimplemented now'">
+          <IconField v-tooltip>
             <InputIcon>
               <i class="pi pi-search"></i>
             </InputIcon>
