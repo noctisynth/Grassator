@@ -32,6 +32,8 @@
         "src/assets/**",
         "public/**",
         "dist/**",
-        "pnpm-lock.yaml"
+        "pnpm-lock.yaml",
+        // Vitepress files
+        "docs/.vitepress/**"
     ]
 }
