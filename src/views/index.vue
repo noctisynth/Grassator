@@ -74,7 +74,12 @@ onMounted(async () => {
             <InputIcon>
               <i class="pi pi-search"></i>
             </InputIcon>
-            <InputText v-model="searchtext" size="small" placeholder="Search" />
+            <InputText
+              v-model="searchtext"
+              size="small"
+              placeholder="Search"
+              disabled
+            />
           </IconField>
         </div>
 
