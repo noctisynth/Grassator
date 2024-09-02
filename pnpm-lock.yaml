@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@primevue/themes':
         specifier: ^4.0.0
-        version: 4.0.3
+        version: 4.0.5
       '@tauri-apps/api':
         specifier: 2.0.0-beta.15
         version: 2.0.0-beta.15
@@ -598,8 +598,8 @@ packages:
     resolution: {integrity: sha512-xL3BlD9Nx5gCCQAHyK2BMujUm34FmBlODuFyevWzEX/lkhzWs7jLVQ5lUpoaiXm+jcdgzq7K0QDA8OxCVITucA==}
     engines: {node: '>=12.11.0'}
 
-  '@primevue/themes@4.0.3':
-    resolution: {integrity: sha512-5Mcb8UES2wg9WtvuK/lKW61xZpkbmRGdxKBh3LfEsxx8pwRmFtRD8XCXUPzaxUv9lwVEW3F/AQ0oAyBbnXptoQ==}
+  '@primevue/themes@4.0.5':
+    resolution: {integrity: sha512-cRrAhOapOT8eFCTDwNdB/acg2ZEEkn7y6h6p188PYSjJsWnYK+D8eI1Js1ZB5HwWo4sWs3oR3Sy8bPwejnGbAw==}
     engines: {node: '>=12.11.0'}
 
   '@rollup/pluginutils@5.1.0':
@@ -2828,7 +2828,7 @@ snapshots:
 
   '@primevue/metadata@4.0.3': {}
 
-  '@primevue/themes@4.0.3':
+  '@primevue/themes@4.0.5':
     dependencies:
       '@primeuix/styled': 0.0.5
 
