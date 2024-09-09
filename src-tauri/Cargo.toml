@@ -22,5 +22,5 @@ serde_json = "1"
 reqwest = "0.12.5"
 tokio = { version = "1.40.0", features = ["parking_lot", "sync"] }
 parking_lot = "0.12.3"
-toml = "0.8.15"
+toml = "0.8.16"
 bytes = "1.6.1"
