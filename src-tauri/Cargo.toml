@@ -23,4 +23,4 @@ reqwest = "0.12.7"
 tokio = { version = "1.40.0", features = ["parking_lot", "sync"] }
 parking_lot = "0.12.3"
 toml = "0.8.16"
-bytes = "1.6.1"
+bytes = "1.7.2"
